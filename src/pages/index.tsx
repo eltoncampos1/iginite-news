@@ -1,4 +1,4 @@
-import { GetStaticSideProps } from 'next'
+import { GetStaticProps } from 'next'
 import Head from 'next/head'
 import Image from 'next/image'
 
@@ -43,13 +43,14 @@ export default function Home({ product }: HomeProps) {
 }
 
 
-export const getStaticSideProps:GetStaticSideProps = async () => {
+export const getStaticProps:GetStaticProps = async () => {
     const price = await stripe.prices.retrieve(process.env.STRIPE_PRICE_KEY)
 
     const product = {
       priceId: price.id,
       amount: moneyFormat((price.unit_amount / 100)),
     }
+    
   return {
     props: {
       product
